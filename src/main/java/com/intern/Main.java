@@ -1,5 +1,7 @@
 package com.intern;
 
+import com.khan.fazal.intern.PrintDash;
+
 import java.util.Scanner;
 
 import static com.intern.TableLister.printTableNames;
