@@ -15,11 +15,12 @@
     </properties>
 
     <dependencies>
-        <!-- Your custom JAR dependency -->
         <dependency>
             <groupId>com.khan.fazal.intern</groupId>
             <artifactId>DashTable</artifactId>
             <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/DashTable.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
