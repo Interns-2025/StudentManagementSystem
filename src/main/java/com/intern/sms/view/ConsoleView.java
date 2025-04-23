@@ -221,7 +221,7 @@ public class ConsoleView {
         String adminUsername = prompt("Enter admin username: ");
         String adminPassword = prompt("Enter admin password: ");
         String role = controller.login(adminUsername, adminPassword);
-        if (role == "admin") {
+        if (role.equals("admin")) {
             String targetUsername = prompt("Enter username of user to reset password: ");
             String newPassword = prompt("Enter new password for " + targetUsername + ": ");
             boolean reset = controller.forgotPassword(targetUsername, newPassword);
