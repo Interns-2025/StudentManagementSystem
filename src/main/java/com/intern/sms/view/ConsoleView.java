@@ -2,13 +2,14 @@
 package com.intern.sms.view;
 
 import com.intern.sms.controller.UserController;
+
 import java.util.Scanner;
 
 public class ConsoleView {
-    private final Scanner sc = new Scanner(System.in);
     private final UserController controller = new UserController();
-
+    Scanner sc;
     public void showMenu(String title, String[] options) {
+
         System.out.println("\n==== " + title + " ====");
         for (int i = 0; i < options.length; i++) {
             System.out.println((i + 1) + ". " + options[i]);
@@ -17,6 +18,7 @@ public class ConsoleView {
     }
 
     public void mainMenu() {
+        sc = new Scanner(System.in);
         while (true) {
             showMenu("User Management Menu", new String[]{"Login", "Sign Up", "Forgot Password", "Exit"});
             int choice = getChoice();
@@ -68,7 +70,8 @@ public class ConsoleView {
                 case 1 -> manageUsers();
                 case 2 -> manageSystemSettings();
                 case 3 -> {
-                    showLoggingOutMessage();;
+                    showLoggingOutMessage();
+                    ;
                     return;
                 }
                 default -> showInvalidChoice();
@@ -118,14 +121,15 @@ public class ConsoleView {
 
     private void teacherDashboard() {
         while (true) {
-            showMenu("Teacher Dashboard", new String[] {"Manage Courses", "Mark Attendance", "Grade Students", "Logout"});
+            showMenu("Teacher Dashboard", new String[]{"Manage Courses", "Mark Attendance", "Grade Students", "Logout"});
             int choice = getChoice();
             switch (choice) {
                 case 1 -> manageCourses();
                 case 2 -> markAttendance();
                 case 3 -> gradeStudents();
                 case 4 -> {
-                    showLoggingOutMessage();;
+                    showLoggingOutMessage();
+                    ;
                     return;
                 }
                 default -> showInvalidChoice();
@@ -144,17 +148,18 @@ public class ConsoleView {
     private void gradeStudents() {
         showUnderDevelopment("Grading students");
     }
-    
+
     private void studentDashboard() {
         while (true) {
-            showMenu("Student Dashboard", new String[] {"View Courses", "Track Attendance", "View Grades", "Logout"});
+            showMenu("Student Dashboard", new String[]{"View Courses", "Track Attendance", "View Grades", "Logout"});
             int choice = getChoice();
             switch (choice) {
                 case 1 -> viewCourses();
                 case 2 -> trackAttendance();
                 case 3 -> viewGrades();
                 case 4 -> {
-                    showLoggingOutMessage();;
+                    showLoggingOutMessage();
+                    ;
                     return;
                 }
                 default -> showInvalidChoice();
@@ -176,13 +181,14 @@ public class ConsoleView {
 
     private void parentDashboard() {
         while (true) {
-            showMenu("Parent Dashboard", new String[] {"Monitor Student Progress", "Pay Fees", "Logout"});
+            showMenu("Parent Dashboard", new String[]{"Monitor Student Progress", "Pay Fees", "Logout"});
             int choice = getChoice();
             switch (choice) {
                 case 1 -> monitorStudentProgress();
                 case 2 -> payFees();
                 case 3 -> {
-                    showLoggingOutMessage();;
+                    showLoggingOutMessage();
+                    ;
                     return;
                 }
                 default -> showInvalidChoice();
@@ -197,7 +203,7 @@ public class ConsoleView {
     private void payFees() {
         showUnderDevelopment("Paying fees");
     }
-    
+
     private void signUp() {
         String username = prompt("Choose a username: ");
         String password = prompt("Choose a password: ");

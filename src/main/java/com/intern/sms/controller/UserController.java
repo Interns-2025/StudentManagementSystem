@@ -2,40 +2,32 @@ package com.intern.sms.controller;
 
 import com.intern.PrintDB;
 import com.khan.fazal.intern.PrintDash;
-import com.intern.sms.dao.UserDAO;
-import com.intern.sms.service.AuthService;
-import com.intern.sms.service.AuthServiceImpl;
-import com.intern.sms.view.ConsoleView;
-import java.sql.SQLException;
+import com.intern.sms.service.UserService;
+import com.intern.sms.service.UserServiceImpl;
 import java.util.List;
 
 public class UserController {
-    private final ConsoleView view = new ConsoleView();
-    private final AuthService authService = new AuthServiceImpl();
+    private final UserService userService = new UserServiceImpl();
 
     public String login(String username, String password) {
-        String role = authService.authenticateAndGetRole(username, password);
+        String role = userService.authenticateAndGetRole(username, password);
         return role;
     }
 
-    public boolean signUp(String username, String password, String email,String role) {
-        boolean registered = authService.registerUser(username, password, email, role);
+    public boolean signUp(String username, String password, String email, String role) {
+        boolean registered = userService.registerUser(username, password, email, role);
         return registered;
     }
 
     public boolean forgotPassword(String targetUsername, String newPassword) {
-        boolean reset = authService.resetPassword(targetUsername, newPassword);
+        boolean reset = userService.resetPassword(targetUsername, newPassword);
         return reset;
     }
 
     public String addUser(String username, String password, String email, String role) {
 
-        try {
-            boolean success = authService.registerUser(username, password, email, role);
-            return(success ? "User added successfully!" : "Failed to add user.");
-        } catch (SQLException e) {
-            return("Error: " + e.getMessage());
-        }
+        boolean success = userService.registerUser(username, password, email, role);
+        return (success ? "User added successfully!" : "Failed to add user.");
     }
 
     public void viewUsers() {
@@ -48,29 +40,35 @@ public class UserController {
     }
 
     public String deleteUser(int userID) {
-        try {
-            UserDAO.deleteUser(userID);
-            return "User deleted successfully.";
-        } catch (Exception e) {
-            return "Error: " + e.getMessage();
-        }
+        boolean success = userService.deleteUser(userID);
+        return (success ? "User deleted successfully!" : "Failed to delete user.");
+
     }
 
-    public void manageSystemSettings() {}
+    public void manageSystemSettings() {
+    }
 
-    public void manageCourses() {}
+    public void manageCourses() {
+    }
 
-    public void markAttendance() {}
+    public void markAttendance() {
+    }
 
-    public void gradeStudents() {}
+    public void gradeStudents() {
+    }
 
-    public void viewCourses() {}
+    public void viewCourses() {
+    }
 
-    public void trackAttendance() {}
+    public void trackAttendance() {
+    }
 
-    public void viewGrades() {}
+    public void viewGrades() {
+    }
 
-    public void monitorStudentProgress() {}
+    public void monitorStudentProgress() {
+    }
 
-    public void payFees() {}
+    public void payFees() {
+    }
 }

@@ -2,18 +2,23 @@ package com.intern.sms.dao;
 
 import com.intern.sms.model.User;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDAO{
 
-    void addUser(User user) throws SQLException;
+    public boolean addUser(String username, String password, String email, String role);
 
-    User getUserById(int userID) throws SQLException;
+    public boolean authenticateAdmin(String username, String password);
 
-    List<User> getAllUsers() throws SQLException;
+    public boolean resetPassword(String targetUsername, String newPassword);
 
-    void updateUser(User user) throws SQLException;
+    public String authenticateAndGetRole(String username, String password);
 
-    void deleteUser(int userID) throws SQLException;
+    User getUserById(int userID);
+
+    List<User> getAllUsers();
+
+    void updateUser(User user);
+
+    boolean deleteUser(int userID);
 }
