@@ -2,8 +2,6 @@
 package com.intern.sms.view;
 
 import com.intern.sms.controller.UserController;
-
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class ConsoleView {
@@ -70,10 +68,10 @@ public class ConsoleView {
                 case 1 -> manageUsers();
                 case 2 -> manageSystemSettings();
                 case 3 -> {
-                    showMessage("Logging out...");
+                    showLoggingOutMessage();;
                     return;
                 }
-                default -> showMessage("Invalid choice.");
+                default -> showInvalidChoice();
             }
         }
     }
@@ -115,7 +113,7 @@ public class ConsoleView {
     }
 
     private void manageSystemSettings() {
-        showMessage("Managing courses functionality is under development.");
+        showUnderDevelopment("Managing System Settings");
     }
 
     private void teacherDashboard() {
@@ -127,24 +125,24 @@ public class ConsoleView {
                 case 2 -> markAttendance();
                 case 3 -> gradeStudents();
                 case 4 -> {
-                    showMessage("Logging out...");
+                    showLoggingOutMessage();;
                     return;
                 }
-                default -> showMessage("Invalid choice.");
+                default -> showInvalidChoice();
             }
         }
     }
 
     private void manageCourses() {
-        showMessage("Managing courses functionality is under development.");
+        showUnderDevelopment("Managing courses");
     }
 
     private void markAttendance() {
-        showMessage("Marking attendance functionality is under development.");
+        showUnderDevelopment("Marking attendance");
     }
 
     private void gradeStudents() {
-        showMessage("Grading students functionality is under development.");
+        showUnderDevelopment("Grading students");
     }
     
     private void studentDashboard() {
@@ -156,24 +154,24 @@ public class ConsoleView {
                 case 2 -> trackAttendance();
                 case 3 -> viewGrades();
                 case 4 -> {
-                    showMessage("Logging out...");
+                    showLoggingOutMessage();;
                     return;
                 }
-                default -> showMessage("Invalid choice.");
+                default -> showInvalidChoice();
             }
         }
     }
 
     private void viewCourses() {
-        showMessage("Viewing courses functionality is under development.");
+        showUnderDevelopment("Viewing courses");
     }
 
     private void trackAttendance() {
-        showMessage("Tracking attendance functionality is under development.");
+        showUnderDevelopment("Tracking attendance");
     }
 
     private void viewGrades() {
-        showMessage("Viewing grades functionality is under development.");
+        showUnderDevelopment("Viewing grades");
     }
 
     private void parentDashboard() {
@@ -184,20 +182,20 @@ public class ConsoleView {
                 case 1 -> monitorStudentProgress();
                 case 2 -> payFees();
                 case 3 -> {
-                    showMessage("Logging out...");
+                    showLoggingOutMessage();;
                     return;
                 }
-                default -> showMessage("Invalid choice.");
+                default -> showInvalidChoice();
             }
         }
     }
 
     private void monitorStudentProgress() {
-        showMessage("Monitoring student progress functionality is under development.");
+        showUnderDevelopment("Monitoring student progress");
     }
 
     private void payFees() {
-        showMessage("Paying fees functionality is under development.");
+        showUnderDevelopment("Paying fees");
     }
     
     private void signUp() {
@@ -226,15 +224,15 @@ public class ConsoleView {
     }
 
     public void showLoggingOutMessage() {
-        System.out.println("Logging out...");
+        showMessage("Logging out...");
     }
 
     public void showInvalidChoice() {
-        System.out.println("Invalid choice.");
+        showMessage("Invalid choice.");
     }
 
     public void showUnderDevelopment(String featureName) {
-        System.out.println(featureName + " functionality is under development.");
+        showMessage(featureName + " functionality is under development.");
     }
 
     public int getChoice() {

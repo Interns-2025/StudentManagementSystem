@@ -18,13 +18,14 @@ public class UserController {
         return role;
     }
 
-    public boolean signUp(String username, String password, String email,String role) throws SQLException {
+    public boolean signUp(String username, String password, String email,String role) {
         boolean registered = authService.registerUser(username, password, email, role);
         return registered;
     }
 
     public boolean forgotPassword(String targetUsername, String newPassword) {
         boolean reset = authService.resetPassword(targetUsername, newPassword);
+        return reset;
     }
 
     public String addUser(String username, String password, String email, String role) {
