@@ -1,5 +1,6 @@
 package com.intern.sms.util;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,10 +8,10 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() {
         try (InputStream input = DBConnection.class.getClassLoader().getResourceAsStream("db_config.properties")) {
             if (input == null) {
-                throw new SQLException("db_config.properties not found in classpath");
+                throw new IOException("db_config.properties not found in classpath");
             }
 
             Properties props = new Properties();
@@ -22,7 +23,8 @@ public class DBConnection {
 
             return DriverManager.getConnection(url, user, pass);
         } catch (Exception e) {
-            throw new SQLException("Failed to load database configuration", e);
+            e.printStackTrace();
+            return null;
         }
     }
 }

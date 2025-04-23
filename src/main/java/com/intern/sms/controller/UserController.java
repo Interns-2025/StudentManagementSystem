@@ -1,6 +1,6 @@
 package com.intern.sms.controller;
 
-import com.intern.PrintDB;
+import com.intern.sms.util.PrintDB;
 import com.khan.fazal.intern.PrintDash;
 import com.intern.sms.service.UserService;
 import com.intern.sms.service.UserServiceImpl;

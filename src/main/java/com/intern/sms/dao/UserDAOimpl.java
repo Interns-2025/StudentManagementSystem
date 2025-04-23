@@ -3,7 +3,6 @@ package com.intern.sms.dao;
 import com.intern.sms.util.DBConnection;
 import com.intern.sms.model.User;
 import org.mindrot.jbcrypt.BCrypt;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,8 +163,6 @@ public class UserDAOimpl implements UserDAO {
         }
         return false;
     }
-
-
 
     private User extractUser(ResultSet rs) {
         try {
