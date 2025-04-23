@@ -161,7 +161,7 @@ public class UserDAOimpl implements UserDAO {
             e.printStackTrace();
             return false;
         }
-        return false;
+        return true;
     }
 
     private User extractUser(ResultSet rs) {
