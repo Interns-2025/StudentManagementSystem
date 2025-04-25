@@ -5,29 +5,27 @@ import com.khan.fazal.intern.PrintDash;
 import com.intern.sms.service.UserService;
 import com.intern.sms.service.UserServiceImpl;
 import java.util.List;
+import static com.intern.sms.util.Constants.*;
 
 public class UserController {
     private final UserService userService = new UserServiceImpl();
 
     public String login(String username, String password) {
-        String role = userService.authenticateAndGetRole(username, password);
-        return role;
+        return userService.authenticateAndGetRole(username, password);
     }
 
     public boolean signUp(String username, String password, String email, String role) {
-        boolean registered = userService.registerUser(username, password, email, role);
-        return registered;
+        return userService.registerUser(username, password, email, role);
     }
 
     public boolean forgotPassword(String targetUsername, String newPassword) {
-        boolean reset = userService.resetPassword(targetUsername, newPassword);
-        return reset;
+        return userService.resetPassword(targetUsername, newPassword);
     }
 
     public String addUser(String username, String password, String email, String role) {
 
         boolean success = userService.registerUser(username, password, email, role);
-        return (success ? "User added successfully!" : "Failed to add user.");
+        return (success ? SUCCESS_ADD : FAIL_ADD);
     }
 
     public void viewUsers() {
@@ -41,7 +39,7 @@ public class UserController {
 
     public String deleteUser(int userID) {
         boolean success = userService.deleteUser(userID);
-        return (success ? "User deleted successfully!" : "Failed to delete user.");
+        return (success ? SUCCESS_DEL : FAIL_DEL);
 
     }
 

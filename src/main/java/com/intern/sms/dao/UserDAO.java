@@ -1,7 +1,6 @@
 package com.intern.sms.dao;
 
 import com.intern.sms.model.User;
-
 import java.util.List;
 
 public interface UserDAO{

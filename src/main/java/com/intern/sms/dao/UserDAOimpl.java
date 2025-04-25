@@ -6,7 +6,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import static com.intern.sms.util.DBQueries.*;
+import static com.intern.sms.util.Constants.*;
+import static com.intern.sms.util.DBConstants.*;
 
 public class UserDAOimpl implements UserDAO {
 
@@ -34,11 +35,11 @@ public class UserDAOimpl implements UserDAO {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String storedHash = rs.getString("password");
-                String role = rs.getString("role");
+                String storedHash = rs.getString(PASSWORD);
+                String role = rs.getString(ROLE);
 
                 // Check if the role is 'admin' and compare password
-                if ("admin".equals(role) && BCrypt.checkpw(password, storedHash)) {
+                if (ADMIN.equals(role) && BCrypt.checkpw(password, storedHash)) {
                     return true; // Admin authenticated successfully
                 }
             }
@@ -74,9 +75,9 @@ public class UserDAOimpl implements UserDAO {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String storedHash = rs.getString("password");
+                String storedHash = rs.getString(PASSWORD);
                 if (BCrypt.checkpw(password, storedHash)) {
-                    return rs.getString("role"); // return role on successful match
+                    return rs.getString(ROLE); // return role on successful match
                 }
             }
         } catch (Exception e) {
@@ -109,10 +110,10 @@ public class UserDAOimpl implements UserDAO {
 
             while (rs.next()) {
                 User user = new User();
-                user.setUserID(rs.getInt("userID"));
-                user.setUsername(rs.getString("username"));
-                user.setEmail(rs.getString("email"));
-                user.setRole(rs.getString("role"));
+                user.setUserID(rs.getInt(USER_ID));
+                user.setUsername(rs.getString(USERNAME));
+                user.setEmail(rs.getString(EMAIL));
+                user.setRole(rs.getString(ROLE));
                 users.add(user);
             }
         } catch (Exception e) {
@@ -139,8 +140,7 @@ public class UserDAOimpl implements UserDAO {
 
     @Override
     public boolean deleteUser(int userID) {
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(DELETE_USER)) {
+        try (PreparedStatement stmt = prepare(DELETE_USER)) {
             stmt.setInt(1, userID);
             stmt.executeUpdate();
         } catch (Exception e) {
@@ -153,11 +153,11 @@ public class UserDAOimpl implements UserDAO {
     private User extractUser(ResultSet rs) {
         try {
             return new User(
-                    rs.getInt("userID"),
-                    rs.getString("username"),
-                    rs.getString("password"),
-                    rs.getString("email"),
-                    rs.getString("role")
+                    rs.getInt(USER_ID),
+                    rs.getString(USERNAME),
+                    rs.getString(PASSWORD),
+                    rs.getString(EMAIL),
+                    rs.getString(ROLE)
             );
         } catch (Exception e) {
             e.printStackTrace();
