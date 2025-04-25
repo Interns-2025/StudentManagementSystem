@@ -6,18 +6,17 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import static com.intern.sms.util.DBQueries.*;
 
 public class UserDAOimpl implements UserDAO {
 
     @Override
     public boolean addUser(String username, String password, String email, String role) {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());  // Hash the password
-        String query = "INSERT INTO user (username, password, email, role) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (PreparedStatement stmt = prepare(ADD_USER)) {
             stmt.setString(1, username);
-            stmt.setString(2, hashedPassword);  // Save the hashed password
+            stmt.setString(2, hashedPassword);
             stmt.setString(3, email);
             stmt.setString(4, role);
 
@@ -30,9 +29,7 @@ public class UserDAOimpl implements UserDAO {
     }
 
     public boolean authenticateAdmin(String username, String password){
-        String query = "SELECT password, role FROM user WHERE username = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (PreparedStatement stmt = prepare(AUTH_ADMIN)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
@@ -58,9 +55,7 @@ public class UserDAOimpl implements UserDAO {
         String hashedNewPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
 
         // Update the target user's password
-        String updateQuery = "UPDATE user SET password = ? WHERE username = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
+        try (PreparedStatement stmt = prepare(RESET_PASS)) {
             stmt.setString(1, hashedNewPassword);  // Set the hashed new password
             stmt.setString(2, targetUsername);     // Target user's username
 
@@ -74,9 +69,7 @@ public class UserDAOimpl implements UserDAO {
 
     @Override
     public String authenticateAndGetRole(String username, String password) {
-        String query = "SELECT password, role FROM user WHERE username = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (PreparedStatement stmt = prepare(AUTH_AND_ROLE)) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
 
@@ -95,9 +88,7 @@ public class UserDAOimpl implements UserDAO {
 
     @Override
     public User getUserById(int userID) {
-        String sql = "SELECT * FROM user WHERE userID = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = prepare(GET_BY_ID)) {
             stmt.setInt(1, userID);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -105,7 +96,6 @@ public class UserDAOimpl implements UserDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
         return null;
     }
@@ -113,11 +103,9 @@ public class UserDAOimpl implements UserDAO {
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        String query = "SELECT * FROM user";
 
-        try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try (PreparedStatement stmt = prepare(GET_ALL_USERS);
+             ResultSet rs = stmt.executeQuery(stmt.toString())) {
 
             while (rs.next()) {
                 User user = new User();
@@ -136,9 +124,8 @@ public class UserDAOimpl implements UserDAO {
 
     @Override
     public void updateUser(User user) {
-        String sql = "UPDATE user SET username = ?, password = ?, email = ?, role = ? WHERE userID = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(UPDATE_USER)) {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getEmail());
@@ -152,9 +139,8 @@ public class UserDAOimpl implements UserDAO {
 
     @Override
     public boolean deleteUser(int userID) {
-        String sql = "DELETE FROM user WHERE userID = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(DELETE_USER)) {
             stmt.setInt(1, userID);
             stmt.executeUpdate();
         } catch (Exception e) {
@@ -177,5 +163,10 @@ public class UserDAOimpl implements UserDAO {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public PreparedStatement prepare(String query) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        return conn.prepareStatement(query);
     }
 }
