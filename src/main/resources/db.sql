@@ -1,4 +1,4 @@
-Alter TABLE User (
+CREATE TABLE User (
                       userID INT PRIMARY KEY AUTO_INCREMENT,
                       username VARCHAR(50) NOT NULL UNIQUE,
                       password VARCHAR(100) NOT NULL,

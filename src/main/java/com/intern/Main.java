@@ -1,5 +1,6 @@
 package com.intern;
 
+import com.intern.sms.util.PrintDB;
 import com.khan.fazal.intern.PrintDash;
 
 import java.util.Scanner;
