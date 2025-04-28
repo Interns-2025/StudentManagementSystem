@@ -1,8 +1,13 @@
 package com.intern.sms.util;
 
+import java.util.regex.Pattern;
+
 public class Constants {
     //CLI
     public static final String CHOOSE_OPTION = "Choose an option: ";
+    //REGEX
+    static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+    static final Pattern ROLE_PATTERN = Pattern.compile("^(admin|teacher|student|parent)$", Pattern.CASE_INSENSITIVE);
     // Validate below with Ashwini/Gursimran
     public static final String TITLE_USER_MANAGEMENT = "User Management Menu";
     public static final String[] OPTIONS_USER_MANAGEMENT = new String[]{"Login", "Sign Up", "Forgot Password", "Exit"};

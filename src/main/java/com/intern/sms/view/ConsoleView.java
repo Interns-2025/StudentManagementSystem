@@ -3,6 +3,8 @@ package com.intern.sms.view;
 import com.intern.sms.controller.UserController;
 import java.util.Scanner;
 import static com.intern.sms.util.Constants.*;
+import static com.intern.sms.util.InputValidator.isValidEmail;
+import static com.intern.sms.util.InputValidator.isValidRole;
 
 public class ConsoleView {
     private final UserController controller = new UserController();
@@ -206,8 +208,20 @@ public class ConsoleView {
     private void signUp() {
         String username = prompt(USERNAME_PROMPT);
         String password = prompt(PASSWORD_PROMPT);
-        String email = prompt(EMAIL_PROMPT);
-        String role = prompt(ROLE_PROMPT);
+        String email;
+        do {
+            email = prompt(EMAIL_PROMPT);
+            if (!isValidEmail(email)) {
+                showMessage("Invalid email format. Please try again.");
+            }
+        } while (!isValidEmail(email));
+        String role;
+        do {
+            role = prompt(ROLE_PROMPT);
+            if (!isValidRole(role)) {
+                showMessage("Invalid role. Please enter one of: admin, teacher, student, parent.");
+            }
+        } while (!isValidRole(role));
         if (role.equals(ROLE_ADMIN)) {
             prompt(CONTACT_ADMIN);
         }
