@@ -269,7 +269,6 @@ public class ConsoleView {
 
     public String prompt(String message) {
         logger.info(message);
-        logger.info(message);
         return sc.nextLine();
     }
 
