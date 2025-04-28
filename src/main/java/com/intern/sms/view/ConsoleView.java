@@ -7,6 +7,7 @@ import static com.intern.sms.util.InputValidator.isValidEmail;
 import static com.intern.sms.util.InputValidator.isValidRole;
 
 public class ConsoleView {
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConsoleView.class);
     private final UserController controller = new UserController();
     Scanner sc;
     public void showMenu(String title, String[] options) {
@@ -255,17 +256,24 @@ public class ConsoleView {
     }
 
     public int getChoice() {
-        int choice = sc.nextInt();
-        sc.nextLine(); // consume newline
-        return choice;
+        while (true) {
+            try {
+                logger.info("Enter choice: ");
+                return Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException e) {
+                logger.warn("Invalid input received. Expected a number.");
+                logger.info("Please enter a valid number: ");
+            }
+        }
     }
 
     public String prompt(String message) {
-        System.out.print(message);
+        logger.info(message);
+        logger.info(message);
         return sc.nextLine();
     }
 
     public void showMessage(String message) {
-        System.out.println(message);
+        logger.info(message);
     }
 }
