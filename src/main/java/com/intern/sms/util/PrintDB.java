@@ -1,6 +1,4 @@
-package com.intern;
-
-import com.intern.sms.util.DBConnection;
+package com.intern.sms.util;
 
 import java.sql.*;
 import java.util.ArrayList;
