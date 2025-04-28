@@ -1,3 +1,0 @@
-# StudentManagementSystem
-
-- Added feature
