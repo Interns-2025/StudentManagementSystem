@@ -41,8 +41,8 @@ public class ConsoleView {
     }
 
     private void login() {
-        String username = prompt(USERNAME);
-        String password = prompt(PASSWORD);
+        String username = prompt(USERNAME_PROMPT);
+        String password = prompt(PASSWORD_PROMPT);
 
         String role = controller.login(username, password);
 

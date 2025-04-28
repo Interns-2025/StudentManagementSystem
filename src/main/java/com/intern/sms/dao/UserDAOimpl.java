@@ -5,6 +5,7 @@ import com.intern.sms.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import static com.intern.sms.util.Constants.*;
 import static com.intern.sms.util.DBConstants.*;
@@ -38,16 +39,14 @@ public class UserDAOimpl implements UserDAO {
                 String storedHash = rs.getString(PASSWORD);
                 String role = rs.getString(ROLE);
 
-                // Check if the role is 'admin' and compare password
                 if (ADMIN.equals(role) && BCrypt.checkpw(password, storedHash)) {
                     return true; // Admin authenticated successfully
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
-        return false; // Admin authentication failed
+        return false;
     }
 
     @Override
@@ -57,15 +56,14 @@ public class UserDAOimpl implements UserDAO {
 
         // Update the target user's password
         try (PreparedStatement stmt = prepare(RESET_PASS)) {
-            stmt.setString(1, hashedNewPassword);  // Set the hashed new password
-            stmt.setString(2, targetUsername);     // Target user's username
-
+            stmt.setString(1, hashedNewPassword);
+            stmt.setString(2, targetUsername);
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0; // Return true if password reset was successful
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
+            return false;
     }
 
     @Override
@@ -82,7 +80,6 @@ public class UserDAOimpl implements UserDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
         return null;
     }
@@ -118,7 +115,7 @@ public class UserDAOimpl implements UserDAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return users;
+            return Collections.emptyList();
         }
         return users;
     }
